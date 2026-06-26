@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CalcSIVElvas</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+<h1>CalcSIVElvas</h1>
+
+<p>Calculadora de Diluição Medicamentosa</p>
+
+</header>
+
+<!-- ==========================
+     MENU PRINCIPAL
+=========================== -->
+
+<section id="menuPrincipal">
+
+<button class="botaoGrande" onclick="mostrarAdulto()">
+
+👨 ADULTO
+
+</button>
+
+<button class="botaoGrande" onclick="mostrarPediatria()">
+
+👶 PEDIATRIA &lt; 16 ANOS
+
+</button>
+
+</section>
+
+<!-- ==========================
+        MENU ADULTO
+=========================== -->
+
+<section id="adulto" class="pagina">
+
+<button class="voltar"
+
+onclick="voltarInicio()">
+
+← Voltar
+
+</button>
+
+<h2>Adulto</h2>
+
+<button class="botaoMedicamento"
+
+onclick="abrirMedicamento('cetaminaAdulto')">
+
+Cetamina
+
+</button>
+
+<button class="botaoMedicamento"
+
+onclick="abrirMedicamento('fentanilAdulto')">
+
+Fentanil
+
+</button>
+
+</section>
+<!-- ==========================
+        MENU PEDIATRIA
+=========================== -->
+
+<section id="pediatria" class="pagina">
+
+    <button class="voltar" onclick="voltarInicio()">
+        ← Voltar
+    </button>
+
+    <h2>Pediatria (&lt;16 anos)</h2>
+
+    <h3>ANALGESIA</h3>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('paracetamol')">
+        Paracetamol
+    </button>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('cetaminaPed')">
+        Cetamina
+    </button>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('fentanilPed')">
+        Fentanil
+    </button>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('morfina')">
+        Morfina
+    </button>
+
+    <h3>SEDAÇÃO</h3>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('midazolamAgitacao')">
+        Midazolam - Agitação
+    </button>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('midazolamProcedimento')">
+        Midazolam - Procedimento
+    </button>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('midazolamVentilado')">
+        Midazolam - Criança Ventilada
+    </button>
+
+    <h3>INTOXICAÇÕES</h3>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('flumazenilo')">
+        Flumazenilo
+    </button>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('naloxona')">
+        Naloxona
+    </button>
+
+    <h3>TRAUMA</h3>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('acidoTranexamico')">
+        Ácido Tranexâmico
+    </button>
+
+    <h3>CONVULSÃO</h3>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('diazepam')">
+        Diazepam
+    </button>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('midazolamConvulsao')">
+        Midazolam
+    </button>
+
+    <h3>PCR</h3>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('adrenalina')">
+        Adrenalina
+    </button>
+
+    <button class="botaoMedicamento" onclick="abrirMedicamento('amiodarona')">
+        Amiodarona
+    </button>
+
+</section>
+<!-- ==========================
+        PÁGINA DO MEDICAMENTO
+=========================== -->
+
+<section id="paginaMedicamento" class="pagina">
+
+    <button class="voltar" onclick="voltarAtras()">
+        ← Voltar
+    </button>
+
+    <h2 id="tituloMedicamento">
+        Medicamento
+    </h2>
+
+    <div class="card">
+
+        <label for="peso">
+            Peso (Kg)
+        </label>
+
+        <input
+            type="number"
+            id="peso"
+            placeholder="Ex: 18">
+
+    </div>
+
+    <br>
+
+    <label for="via">
+        Via de Administração
+    </label>
+
+    <select id="via">
+
+    </select>
+
+    <br><br>
+
+    <button
+        class="botaoCalcular"
+        onclick="calcularDose()">
+
+        CALCULAR
+
+    </button>
+
+    <br><br>
+
+    <div id="resultado" class="resultado">
+
+    </div>
+
+</section>
+
+</div>
+
+<script src="medicamentos.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
