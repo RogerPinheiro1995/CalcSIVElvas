@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Procedimentos - CalcSIVElvas</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+h1{
+    color:white;
+    text-align:center;
+}
+.container{
+    max-width:700px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    margin-top:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    margin-bottom:20px;
+    font-size:18px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    font-size:18px;
+    background:#0057B8;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+th{
+    background:#0057B8;
+    color:white;
+    padding:10px;
+}
+
+td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:center;
+}
+
+.voltar{
+    margin-top:30px;
+    background:#DC3545;   /* Vermelho */
+    color:white;
+    font-weight:bold;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🩺 Procedimentos </h1>
+
+<div class="card">
+
+<h2>🔥 Avaliação de Queimaduras</h2>
+<br>
+<br>
+<p><strong>Se ASCQ > 20%</strong></p>
+
+<p>
+Poli:
+<strong>2 a 4 mL × Kg × ASCQ (%)</strong>
+</p>
+<br>
+<br>
+<h2>Peso da vítima: </h2>
+<input type="number" id="peso" placeholder="Ex.: 70" min="1" required>
+
+<h2>ASCQ (%): </h2>
+<input type="number" id="ascq" placeholder="Ex.: 25" min="1" max="100" required>
+
+<button onclick="calcular()">Calcular</button>
+
+<div id="resultado"></div>
+
+</div>
+
+<button class="voltar" onclick="window.location.href='index.html'">
+⬅ Voltar
+</button>
+
+</div>
+
+<script>
+function calcular(){
+
+    let peso = parseFloat(document.getElementById("peso").value);
+    let ascq = parseFloat(document.getElementById("ascq").value);
+
+    if(isNaN(peso) || isNaN(ascq) || peso <= 0 || ascq <= 0){
+        alert("Introduza o Peso e a ASCQ.");
+        return;
+    }
+
+    if(ascq < 20){
+
+        document.getElementById("resultado").innerHTML = `
+            <div class="card">
+                <h3>Resultado</h3>
+                <p><strong>ASCQ inferior a 20%.</strong></p>
+                <p>A fórmula de Parkland habitualmente não está indicada para queimaduras inferiores a 20% da superfície corporal.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    // Volume total
+    let minimo = 2 * peso * ascq;
+    let maximo = 4 * peso * ascq;
+
+    // Primeiras 8 horas
+    let min8 = minimo / 2;
+    let max8 = maximo / 2;
+
+    // Perfusão nas primeiras 8 horas
+    let perf8Min = min8 / 8;
+    let perf8Max = max8 / 8;
+
+    // 16 horas seguintes
+    let min16 = minimo / 2;
+    let max16 = maximo / 2;
+
+    // Perfusão nas 16 horas seguintes
+    let perf16Min = min16 / 16;
+    let perf16Max = max16 / 16;
+
+    document.getElementById("resultado").innerHTML = `
+
+    <table>
+
+        <tr>
+            <th></th>
+            <th>2 mL/kg</th>
+            <th>4 mL/kg</th>
+        </tr>
+
+        <tr>
+            <td><strong>Total 24 h</strong></td>
+            <td>${minimo.toFixed(0)} mL</td>
+            <td>${maximo.toFixed(0)} mL</td>
+        </tr>
+
+        <tr>
+            <td><strong>Primeiras 8 h</strong></td>
+            <td>${min8.toFixed(0)} mL</td>
+            <td>${max8.toFixed(0)} mL</td>
+        </tr>
+
+        <tr>
+            <td><strong>Perfusão 8 h</strong></td>
+            <td>${perf8Min.toFixed(0)} mL/h</td>
+            <td>${perf8Max.toFixed(0)} mL/h</td>
+        </tr>
+
+        <tr>
+            <td><strong>16 h seguintes</strong></td>
+            <td>${min16.toFixed(0)} mL</td>
+            <td>${max16.toFixed(0)} mL</td>
+        </tr>
+
+        <tr>
+            <td><strong>Perfusão 16 h</strong></td>
+            <td>${perf16Min.toFixed(0)} mL/h</td>
+            <td>${perf16Max.toFixed(0)} mL/h</td>
+        </tr>
+
+    </table>
+
+    <br>
+
+    <div class="card">
+
+        <h3>Resumo</h3>
+
+        <p>✔ <strong>ASCQ:</strong> ${ascq}%</p>
+
+        <p>✔ <strong>Peso:</strong> ${peso} kg</p>
+
+        <p>✔ Administrar <strong>50% do volume nas primeiras 8 horas</strong> desde o momento da queimadura.</p>
+<br>
+<br>
+        <p><strong>Programar a bomba infusora para:</strong></p>
+
+        <ul style="text-align:left;">
+            <li><strong>${perf8Min.toFixed(0)} mL/h</strong> (esquema 2 mL/kg)</li>
+            <li><strong>${perf8Max.toFixed(0)} mL/h</strong> (esquema 4 mL/kg)</li>
+        </ul>
+
+        <p>Após as primeiras 8 horas, administrar o restante volume nas 16 horas seguintes.</p>
+
+    </div>
+
+    `;
+}
+
+</script>
+
+</body>
+</html>
